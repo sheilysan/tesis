@@ -12,7 +12,7 @@ try {
   }
 
     $id_usuario = $_POST["txtIdUsuario"];
-    $clave = $_POST["txtclave"];
+    $clave = md5($_POST["txtclave"]);
 
     $objSesion = new Sesion();
 

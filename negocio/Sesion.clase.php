@@ -58,17 +58,17 @@ class Sesion extends Conexion{
 
     					}else{
                 //Contraseña incorrecta pero se manda error de datos al ingresar
-    						throw new Exception("Contraseña incorrecta pero se manda error de datos al ingresar");
+    						throw new Exception("Datos incorrectos.");
     						exit;
     					}
     				}else{
               //Cuenta inactiva
-    					throw new Exception("Cuenta inactiva");
+    					throw new Exception("Su cuenta se encuentra inactiva.");
     					exit;
     				}
     			}else{
             //Cuenta no existe pero se manda error de datos al ingresar
-    				throw new Exception("Cuenta no existe pero se manda error de datos al ingresar");
+    				throw new Exception("Datos incorrectos.");
     				exit;
     			}
     		}catch(PDOException $ex){
