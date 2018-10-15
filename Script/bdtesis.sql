@@ -128,3 +128,4 @@ CONSTRAINT fk_pregunta_pregunta foreign key (id_pregunta) references pregunta(id
 );
 
 alter table usuario modify column estado char(1) not null default 'A';
+alter table usuario modify column clave char(32) not null;

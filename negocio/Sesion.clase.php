@@ -18,9 +18,9 @@ class Sesion extends Conexion{
 
     			if($stmt->rowCount()){
             if($userRow['estado']=="E"){
-              throw new Exception("Su registro al CONEII 2018 ha sido cancelado.");
+              throw new Exception("Usted ha sido restringido de la aplicación.");
             }
-    				if($userRow['estado'] == "Y"){
+    				if($userRow['estado'] == "A"){
     					if($userRow['clave'] == md5($clave)){
       					session_start();
 
