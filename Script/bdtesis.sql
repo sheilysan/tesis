@@ -126,3 +126,5 @@ CONSTRAINT pk_pregunta PRIMARY key (id_test, id_pregunta),
 CONSTRAINT fk_pregunta_test foreign key (id_test) references test(id_test),
 CONSTRAINT fk_pregunta_pregunta foreign key (id_pregunta) references pregunta(id_pregunta)
 );
+
+alter table usuario modify column estado char(1) not null default 'A';
