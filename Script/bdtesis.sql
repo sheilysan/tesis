@@ -92,3 +92,37 @@ CONSTRAINT fk_periodo_usuario_periodo foreign key (id_periodo) references period
 CONSTRAINT fk_periodo_usuario_usuario foreign key (id_usuario) references usuario(id_usuario),
 CONSTRAINT fk_periodo_usuario_tema foreign key (id_tema) references tema(id_tema)
 );
+
+alter table usuario add column estado char (1) not null;
+alter table test add column estado char (1) not null;
+alter table hueso add column nombre varchar (100) not null;
+
+create TABLE opcion (
+id_opcion int AUTO_INCREMENT not null,
+descripcion varchar (100) not null,
+valor char (1) not null,
+CONSTRAINT pk_opcion PRIMARY key (id_opcion)
+);
+
+create TABLE pregunta (
+id_pregunta int AUTO_INCREMENT not null,
+descripcion varchar (500) not null,
+puntaje real not null,
+CONSTRAINT pk_pregunta PRIMARY key (id_pregunta)
+);
+
+create TABLE opcionpregunta (
+id_opcion int not null,
+id_pregunta int not null,
+CONSTRAINT pk_opcionpregunta PRIMARY key (id_opcion, id_pregunta),
+CONSTRAINT fk_opcionpregunta_opcion foreign key (id_opcion) references opcion(id_opcion),
+CONSTRAINT fk_opcionpregunta_pregunta foreign key (id_pregunta) references pregunta(id_pregunta)
+);
+
+create TABLE preguntatest (
+id_pregunta int not null,
+id_test int not null,
+CONSTRAINT pk_pregunta PRIMARY key (id_test, id_pregunta),
+CONSTRAINT fk_pregunta_test foreign key (id_test) references test(id_test),
+CONSTRAINT fk_pregunta_pregunta foreign key (id_pregunta) references pregunta(id_pregunta)
+);
