@@ -3,19 +3,17 @@ $("#login-form").submit(function(evento){
     let usuario = $('#txtIdUsuario').val(), clave = $('#txtclave').val()
 
     $.post("../webservice/sesion.iniciar.php", {txtIdUsuario: usuario, txtclave: clave}).done(function(resultado) {
-      let datosJSON = resultado;
-      console.error(resultado.mensaje);
-      window.location.href=resultado.mensaje
-      // if(datosJSON.estado === 200){
-
-        // datosJSON.datos.map(function(item){
-        //   if(item.vac_disp > 0){
-        //
-        //   });
-        // }
-      // }
+      console.warn(resultado);
+      if (resultado.estado === 200){
+        window.location.href=resultado.mensaje
+      }
     }).fail(function(error) {
+      console.error(error);
       let datosJSON = $.parseJSON(error.responseText);
-      swal("Error", datosJSON.mensaje, "error");
+      swal({
+            type: 'error',
+            title: 'Oops...',
+            text: datosJSON.mensaje
+          });
     });
 });

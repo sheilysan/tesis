@@ -19,14 +19,14 @@
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <img src="../util/LTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-            <span class="hidden-xs">Nombre del usuario</span>
+            <span class="hidden-xs"><?php echo $_SESSION['nombres'] ." ".$_SESSION['paterno'];  ?></span>
           </a>
           <ul class="dropdown-menu">
             <!-- User image -->
             <li class="user-header">
               <img src="../util/LTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
               <p>
-                Nombre del usuario - Tipo de usuario
+                <?php echo $_SESSION['nombres'] ." ".$_SESSION['paterno'] ." - ".$_SESSION['tipo']; ?>
               </p>
             </li>
             <li class="user-footer">
@@ -34,7 +34,7 @@
                 <a href="#" class="btn btn-default btn-flat">Perfil</a>
               </div>
               <div class="pull-right">
-                <a href="#" class="btn btn-default btn-flat">Cerrar Sesión</a>
+                <a href="../webservice/sesion.cerrar.php" class="btn btn-default btn-flat">Cerrar Sesión</a>
               </div>
             </li>
           </ul>

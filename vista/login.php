@@ -1,3 +1,13 @@
+<?php
+require_once __DIR__.'/../negocio/Sesion.clase.php';
+$sesion = new Sesion();
+
+session_start();
+if($sesion->comprobarSesion()){
+  header("Location: http://localhost/tesis/vista/");
+}
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -23,7 +33,7 @@
     width:100%;
     padding : 50px 0;
     }
-    .banner-sec{background:url(https://static.pexels.com/photos/33972/pexels-photo.jpg)  no-repeat left bottom; background-size:cover; min-height:500px; border-radius: 0 10px 10px 0; padding:0;}
+    .banner-sec{background:#000  no-repeat left bottom; background-size:cover; min-height:500px; border-radius: 0 10px 10px 0; padding:0;}
     .container{background:#fff; border-radius: 10px; box-shadow:15px 20px 0px rgba(0,0,0,0.1);}
     .carousel-inner{border-radius:0 10px 10px 0;}
     .carousel-caption{text-align:left; left:5%;}
@@ -48,36 +58,32 @@
 		    <h2 class="text-center">Inicio de Sesión</h2>
 		    <form class="login-form" id="login-form" name="login-form" method="post">
   <div class="form-group">
-    <label for="txtIdUsuario" class="text-uppercase">Username</label>
+    <label for="txtIdUsuario" class="text-uppercase">Código de usuario</label>
     <input type="text" class="form-control" id="txtIdUsuario" name="txtIdUsuario" placeholder="">
 
   </div>
   <div class="form-group">
-    <label for="txtclave" class="text-uppercase">Password</label>
+    <label for="txtclave" class="text-uppercase">Clave</label>
     <input type="password" class="form-control" id="txtclave" name="txtclave" placeholder="">
   </div>
 
 
     <div class="form-check">
-    <label class="form-check-label">
-      <input type="checkbox" class="form-check-input">
-      <small>Remember Me</small>
-    </label>
     <button type="submit" class="btn btn-login float-right">Submit</button>
   </div>
 
 </form>
-<div class="copy-text">Created with <i class="fa fa-heart"></i> by <a href="http://grafreez.com">Grafreez.com</a></div>
+<div class="copy-text">Anatomía <i class="fa fa-heart"></i> <a href="#">3D</a></div>
 		</div>
 		<div class="col-md-8 banner-sec">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 
             <div class="carousel-inner" role="listbox">
     <div class="carousel-item active">
-      <img class="d-block img-fluid" src="https://static.pexels.com/photos/33972/pexels-photo.jpg" alt="First slide">
+      <img class="d-block img-fluid" src="https://www.thoughtco.com/thmb/um8lia277rwTc1MZ_lj4d9DAqLk=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/muscles-anatomy-58545dc85f9b586e02f71781.jpg" alt="First slide">
       <div class="carousel-caption d-none d-md-block">
         <div class="banner-text">
-            <h2>This is Heaven</h2>
+            <h2>Anatomía 3D</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
         </div>
   </div>

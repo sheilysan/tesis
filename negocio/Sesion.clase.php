@@ -1,22 +1,32 @@
 <?php
-// header('Access-Control-Allow-Origin: *');
-
 require_once __DIR__.'/../datos/conexion.php';
 
 class Sesion extends Conexion{
 
     public function iniciarSesion($id_usuario,$clave) {
     	try{
-        $stmt = $this->dblink->prepare("SELECT *
+        $stmt = $this->dblink->prepare("SELECT u.id_usuario,
+                                               u.clave,
+                                               u.estado,
+                                               p.paterno,
+                                               p.materno,
+                                               p.nombres,
+                                               p.sexo,
+                                               tp.id_tipo,
+                                               tp.nombre as tipo
                                         FROM
                                         	usuario u inner join
-                                          persona p on (u.id_persona=p.id_persona)
+                                          persona p on (u.id_persona=p.id_persona) inner join
+                                          tipo_persona tp on (p.id_tipo_persona = tp.id_tipo)
                                         WHERE u.id_usuario=:id_usuario LIMIT 1");
 				$stmt->bindParam(":id_usuario", $id_usuario);
 				$stmt->execute();
 				$userRow = $stmt->fetch(PDO::FETCH_ASSOC);
 
     			if($stmt->rowCount()){
+            if($userRow['id_tipo'] != 1){
+              throw new Exception("Usted no tiene los permisos necesarios para iniciar sesión aquí");
+            }
             if($userRow['estado']=="E"){
               throw new Exception("Usted ha sido restringido de la aplicación.");
             }
@@ -24,41 +34,16 @@ class Sesion extends Conexion{
     					if($userRow['clave'] == $clave){
       					session_start();
 
-                $_SESSION['userSession'] = $userRow['id_usuario'];
-                // $_SESSION['id_persona'] = $userRow['id_persona'];
-                // $_SESSION['correo'] = $userRow['correo'];
-                // $_SESSION['dni'] = $userRow['numero_documento'];
-                // $_SESSION['tipo'] = $userRow['id_area'];
-                // $_SESSION['delegado'] = $userRow['delegado'];
-                // $_SESSION['nombre'] = $userRow['nombres'];
-                // $_SESSION['paterno'] = $userRow['apellido_paterno'];
-                // $_SESSION['materno'] = $userRow['apellido_materno'];
-                // $_SESSION['sexo'] = $userRow['sexo'];
-                // $_SESSION['telefono'] = $userRow['telefono'];
-                // $_SESSION['cumple'] = $userRow['fecha_nacimiento'];
-                // $_SESSION['foto'] = $fotovalidada;
-                // $_SESSION['iduniv'] = $userRow['codUniv'];
-                // $_SESSION['univ'] = $userRow['univnomb'];
-                // $_SESSION['coduniv'] = $userRow['codigo_universitario'];
-                // $_SESSION['ciclo'] = $userRow['ciclo_academico'];
-                // $_SESSION['inscrip'] = $userRow['tipo'];
-                // $_SESSION['dep'] = $userRow['depart'];
-                // $_SESSION['cdep'] = $userRow['id_departamento'];
-                // $_SESSION['prov'] = $userRow['provi'];
-                // $_SESSION['cprov'] = $userRow['id_provincia'];
-                // $_SESSION['dist'] = $userRow['distri'];
-                // $_SESSION['cdist'] = $userRow['id_distrito'];
-                // $_SESSION['deuda'] = $userRow['estadoDeuda'];// -- N -> pago pediente     ## NM -> no inscrito    ##  S -> si pago
-                // $_SESSION['pais'] = $userRow['id_pais'];
-                // $_SESSION['etapa'] = $userRow['etapa'];
-                // $_SESSION['catreg'] = $userRow['categoria_registro'];
-                // $_SESSION['inscrito'] = $userRow['ins'];
-                // $_SESSION['id_etapa'] = $userRow['id_etapa'];
-                return $userRow;
-
+                $_SESSION['id_usuario'] = $userRow['id_usuario'];
+                $_SESSION['paterno'] = $userRow['paterno'];
+                $_SESSION['materno'] = $userRow['materno'];
+                $_SESSION['nombres'] = $userRow['nombres'];
+                $_SESSION['sexo'] = $userRow['sexo'];
+                $_SESSION['tipo'] = $userRow['tipo'];
+                return true;
     					}else{
                 //Contraseña incorrecta pero se manda error de datos al ingresar
-    						throw new Exception("Datos incorrectos.");
+    						throw new Exception("Datos de inicio de sesión incorrectos.");
     						exit;
     					}
     				}else{
@@ -68,7 +53,7 @@ class Sesion extends Conexion{
     				}
     			}else{
             //Cuenta no existe pero se manda error de datos al ingresar
-    				throw new Exception("Datos incorrectos.");
+    				throw new Exception("Datos de inicio de sesión incorrectos.");
     				exit;
     			}
     		}catch(PDOException $ex){
@@ -77,40 +62,21 @@ class Sesion extends Conexion{
     }
 
   public function comprobarSesion(){
-		if(isset($_SESSION['userSession'])){
+		if(isset($_SESSION['id_usuario'])){
 			return true;
-		}
+		}else{
+      return false;
+    }
 	}
 
 	public function cerrarSesion(){
     session_start();
-    // unset($_SESSION['userSession']);
-    // unset($_SESSION['correo']);
-    // unset($_SESSION['dni']);
-    // unset($_SESSION['tipo']);
-    // unset($_SESSION['delegado']);
-    // unset($_SESSION['nombre']);
-    // unset($_SESSION['paterno']);
-    // unset($_SESSION['materno']);
-    // unset($_SESSION['sexo']);
-    // unset($_SESSION['telefono']);
-    // unset($_SESSION['foto']);
-    // unset($_SESSION['univ']);
-    // unset($_SESSION['coduniv']);
-    // unset($_SESSION['ciclo']);
-    // unset($_SESSION['inscrip']);
-    // unset($_SESSION['cumple']);
-    // unset($_SESSION['dep']);
-    // unset($_SESSION['cdep']);
-    // unset($_SESSION['prov']);
-    // unset($_SESSION['cprov']);
-    // unset($_SESSION['dist']);
-    // unset($_SESSION['cdist']);
-    // unset($_SESSION['etapa']);
-    // unset($_SESSION['catreg']);
-    // unset($_SESSION['deuda']);
-    // unset($_SESSION['pais']);
-    // unset($_SESSION['inscrito']);
+    unset($_SESSION['id_usuario']);
+    unset($_SESSION['paterno']);
+    unset($_SESSION['materno']);
+    unset($_SESSION['nombres']);
+    unset($_SESSION['sexo']);
+    unset($_SESSION['tipo']);
     session_destroy();
 	}
 
