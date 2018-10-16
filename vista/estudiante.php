@@ -1,0 +1,98 @@
+<?php
+    require_once __DIR__.'/validar.sesion.php';
+?>
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require_once 'head.php';?>
+  <link rel="stylesheet" href="../util/LTE/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+  <link rel="stylesheet" href="../util/LTE/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+</head>
+<body class="hold-transition skin-blue sidebar-mini fixed">
+<div class="wrapper">
+
+  <?php require_once 'cabecera.php'; ?>
+
+  <?php require_once 'barra.izquierda.php'; ?>
+
+  <div class="content-wrapper">
+
+    <section class="content-header">
+      <h1>
+        Inicio
+        <small>Panel de Control</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
+        <li>Panel de Control</li>
+        <li class="active">Estudiante</li>
+      </ol>
+    </section>
+
+    <!-- Contenido principal -->
+    <section class="content">
+      <div class="row">
+        <div class="col-lg-12 col-xs-12 col-md-12">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Estudiantes</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" id="btnAgregar" onclick="agregar()" class="btn btn-block btn-primary btn-xs"><i class="fa fa-plus-circle"></i> Agregar nuevo estudiante</button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="col-lg-12 col-xs-12 col-md-12">
+                <div id="divListado">
+
+                </div>
+              </div>
+              <div id="divAgregar" >
+                <form method="post">
+                  <div class="form-group">
+                    <label for="txtNombreEstudiante">Nombre estudiante</label>
+                    <input type="text" class="form-control" name="txtNombreEstudiante" id="txtNombreEstudiante" placeholder="">
+                  </div>
+                  <div class="form-group">
+                    <label>Fecha de inicio - fecha de fin</label>
+
+                    <div class="input-group">
+                      <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                      <input type="text" class="form-control pull-right" id="rango">
+                      <input type="text" name="txtFechaIni" id="txtFechaIni" hidden>
+                      <input type="text" name="txtFechaFin" id="txtFechaFin" hidden>
+                      <input type="text" name="txtIdEstudiante" id="txtIdEstudiante" hidden>
+                    </div>
+                  </div>
+
+                  <div class="form-group pull-right">
+                    <button type="button" onclick="guardar()" name="btnGuardar" id="btnGuardar" class="btn btn-sm btn-success"> Guardar </button>
+                    <button type="button" onclick="cancelar()" name="btnCancelar" id="btnCancelar" class="btn btn-sm btn-danger"> Cancelar </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+    </section>
+    <!-- /.Fin del contenido principal -->
+  </div>
+
+  <?php require_once 'footer.php'; ?>
+
+</div>
+<?php require_once 'script.php' ?>
+<script src="../util/LTE/bower_components/moment/min/moment.min.js"></script>
+<script src="../util/LTE/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="../util/LTE/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../util/LTE/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="js/estudiante.js"></script>
+</body>
+</html>

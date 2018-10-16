@@ -134,3 +134,5 @@ alter table tipo_persona modify column nombre varchar(20) not null;
 insert into tipo_persona values(1,'Administrador');
 insert into persona values('131td43154','Vásquez','Pacheco','Raúl M.','M','1993-06-12','969105301',1);
 insert into usuario (id_usuario,clave,id_persona) values(1,'81dc9bdb52d04dc20036dbd8313ed055','131td43154');
+
+insert into tipo_persona values(2,'Estudiante');

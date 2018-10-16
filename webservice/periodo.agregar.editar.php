@@ -20,10 +20,12 @@ try {
 
     if(is_numeric($id_periodo)){
       $resultado = $objPeriodo->editar($id_periodo,$nombre,$inicio,$fin);
+      Funciones::imprimeJSON(200,"El periodo ha sido actualizado.",$resultado);
     }else{
       $resultado = $objPeriodo->agregar($nombre,$inicio,$fin);
+      Funciones::imprimeJSON(200,"El periodo $nombre ha sido agregado.",$resultado);
     }
-    Funciones::imprimeJSON(200,"Genial",$resultado);
+
 
 } catch (Exception $ex) {
     Funciones::imprimeJSON(500, $ex->getMessage(), "");
