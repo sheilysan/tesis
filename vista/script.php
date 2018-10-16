@@ -5,3 +5,4 @@
 </script>
 <script src="../util/LTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../util/LTE/dist/js/adminlte.min.js"></script>
+<script src="../util/sweetalert2/dist/sweetalert2.all.min.js"></script>
