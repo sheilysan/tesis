@@ -72,4 +72,16 @@ class Periodo extends Conexion{
       throw $e;
     }
   }
+
+  public function eliminar($id_periodo){
+    try {
+      $sql = "DELETE from periodo where id_periodo = :p_id_periodo;";
+      $sentencia = $this->dblink->prepare($sql);
+      $sentencia->bindParam(":p_id_periodo", $id_periodo);
+      $sentencia->execute();
+      return true;
+    } catch (Exception $e) {
+      throw $e;
+    }
+  }
 }
