@@ -5,8 +5,9 @@
 <html>
 <head>
   <?php require_once 'head.php';?>
-  <link rel="stylesheet" href="../util/LTE/bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <link rel="stylesheet" href="../util/LTE/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="../util/LTE/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+  <link rel="stylesheet" href="../util/LTE/plugins/iCheck/all.css">
 </head>
 <body class="hold-transition skin-blue sidebar-mini fixed">
 <div class="wrapper">
@@ -52,21 +53,57 @@
               <div id="divAgregar" >
                 <form method="post">
                   <div class="form-group">
-                    <label for="txtNombreEstudiante">Nombre estudiante</label>
+                    <label for="txtNombreEstudiante">Nombre</label>
                     <input type="text" class="form-control" name="txtNombreEstudiante" id="txtNombreEstudiante" placeholder="">
                   </div>
-                  <div class="form-group">
-                    <label>Fecha de inicio - fecha de fin</label>
 
-                    <div class="input-group">
+                  <div class="form-group">
+                    <label for="txtApellidoPaterno">Apellido Paterno</label>
+                    <input type="text" class="form-control" name="txtApellidoPaterno" id="txtApellidoPaterno" placeholder="">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="txtApellidoMaterno">Apellido Materno</label>
+                    <input type="text" class="form-control" name="txtApellidoMaterno" id="txtApellidoMaterno" placeholder="">
+                  </div>
+
+                  <div class="form-group">
+                    <label>
+                      <input type="radio" name="r1" class="minimal" checked>
+                      Masculino
+                    </label>
+                    <label>
+                      <input type="radio" name="r1" class="minimal">
+                      Femenino
+                    </label>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Fecha nacimiento:</label>
+                    <div class="input-group date">
                       <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <input type="text" class="form-control pull-right" id="rango">
-                      <input type="text" name="txtFechaIni" id="txtFechaIni" hidden>
-                      <input type="text" name="txtFechaFin" id="txtFechaFin" hidden>
-                      <input type="text" name="txtIdEstudiante" id="txtIdEstudiante" hidden>
+                      <input type="text" class="form-control pull-right" id="datepicker">
                     </div>
+                    <!-- /.input group -->
+                  </div>
+
+                  <div class="form-group">
+                    <label>Telefono:</label>
+
+                    <div class="input-group">
+                      <div class="input-group-addon">
+                        <i class="fa fa-phone"></i>
+                      </div>
+                      <input type="text" class="form-control" data-inputmask='"mask": "999-999-999"' data-mask>
+                    </div>
+                    <!-- /.input group -->
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Contraseña</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña">
                   </div>
 
                   <div class="form-group pull-right">
@@ -90,9 +127,15 @@
 </div>
 <?php require_once 'script.php' ?>
 <script src="../util/LTE/bower_components/moment/min/moment.min.js"></script>
-<script src="../util/LTE/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script src="../util/LTE/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../util/LTE/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="../util/LTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="../util/LTE/plugins/iCheck/icheck.min.js"></script>
+<!-- InputMask -->
+<script src="../util/LTE/plugins/input-mask/jquery.inputmask.js"></script>
+<script src="../util/LTE/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="../util/LTE/plugins/input-mask/jquery.inputmask.extensions.js"></script>
 <script type="text/javascript" src="js/estudiante.js"></script>
+
 </body>
 </html>
