@@ -1,12 +1,15 @@
 $(document).ready(function() {
-  $('#rango').daterangepicker({
-    locale: { cancelLabel: 'cancelar', applyLabel: 'Aplicar', format: 'DD-MM-YYYY', separator: ' hasta ', fromLabel:'Desde', toLabel: 'Hasta', customRangeLabel: 'Custom', daysOfWeek: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'], monthNames: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic']}
-  }, function(start,end,label){
-    $('#txtFechaIni').val(start.format('YYYY-MM-DD'));
-    $('#txtFechaFin').val(end.format('YYYY-MM-DD'));
-    console.warn($('#txtFechaIni').val()+' hasta '+$('#txtFechaFin').val());
-  });
-  $('#rango').val('');
+  $('#datepicker').datepicker({
+    autoclose: true
+  })
+
+  $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+    checkboxClass: 'icheckbox_minimal-blue',
+    radioClass   : 'iradio_minimal-blue'
+  })
+
+  $('[data-mask]').inputmask()
+
   listarEstudiantes();
 
 
