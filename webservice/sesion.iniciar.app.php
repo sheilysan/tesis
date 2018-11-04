@@ -12,12 +12,12 @@ try {
   }
 
     $id_usuario = $_POST["txtIdUsuario"];
-    $clave = md5($_POST["txtclave"]); //aqu se convierte la contraseña enviada en md5
+    $clave = $_POST["txtclave"]; //aqu se convierte la contraseña enviada en md5
 
     $objSesion = new Sesion();
 
-    $resultado = $objSesion->iniciarSesion($id_usuario,$clave);
-    Funciones::imprimeJSON(200,"http://localhost/tesis/vista",$resultado);
+    $resultado = $objSesion->iniciarSesionApp($id_usuario,$clave);
+    Funciones::imprimeJSON(200,"Bienvenido",$resultado);
 
 } catch (Exception $ex) {
     Funciones::imprimeJSON(500, $ex->getMessage(), "");
