@@ -12,8 +12,8 @@ try {
 
   $id_persona = $_POST["persona"];
   $objEstudiante = new Estudiante();
-  $resultado = $objEstudiante->eliminar($id_persona);
-  Funciones::imprimeJSON(200,"Estudiante específico eliminado",$resultado);
+  $resultado = $objEstudiante->leerDatos($id_persona);
+  Funciones::imprimeJSON(200,"Estudiante específico",$resultado);
 
 } catch (Exception $ex) {
     Funciones::imprimeJSON(500, $ex->getMessage(), "");
