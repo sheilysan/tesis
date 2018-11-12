@@ -1,6 +1,7 @@
 $(document).ready(function() {
-  $('#datepicker').datepicker({
-    autoclose: true
+  $('#txtFechaNacimiento').datepicker({
+    autoclose: true,
+    format: 'dd/mm/yyyy'
   })
 
   $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
@@ -48,20 +49,27 @@ function listarEstudiantes() {
         } else {
           html += '<tr>';
         }
+        let sexo = 'MASCULINO'
+        if(item.sexo == 'F'){
+          sexo = 'FEMENINO'
+        }
+
         html += '<td align="center">';
         html += '<div class="row-fluid">';
-        html += '<button onclick="leerDatos(' + item.id_estudiante + ')" type="button" class="btn btn-warning btn-xs"><i class="fa fa-pencil-square-o"></i></button>&nbsp;&nbsp;';
-        html += '<button onclick="eliminar(' + item.id_estudiante + ',\''+item.nombre+'\')" type="button" class="btn btn-danger btn-xs tip"><i class="fa fa-trash-o"></i></button>&nbsp;&nbsp;';
+        html += '<button onclick="leerDatos(' + item.id_persona + ')" type="button" class="btn btn-warning btn-xs"><i class="fa fa-pencil-square-o"></i></button>&nbsp;&nbsp;';
+        html += '<button onclick="eliminar(' + item.id_persona + ',\''+item.nomb+'\')" type="button" class="btn btn-danger btn-xs tip"><i class="fa fa-trash-o"></i></button>&nbsp;&nbsp;';
         // if(item.conteo > 0){
-        //   html += '<button onclick="mostrarAmbientes(' + item.id_estudiante + ',\''+item.nomb+'\')" type="button" class="btn btn-success btn-xs tip" data-toggle="modal" data-target="#modalAmbientes"><i class="fa fa-eye"></i></button>&nbsp;&nbsp;';
+        //   html += '<button onclick="mostrarAmbientes(' + item.id_persona + ',\''+item.nomb+'\')" type="button" class="btn btn-success btn-xs tip" data-toggle="modal" data-target="#modalAmbientes"><i class="fa fa-eye"></i></button>&nbsp;&nbsp;';
         // }else{
-        //   html += '<button onclick="mostrarAmbientes(' + item.id_estudiante + ',\''+item.nomb+'\')" type="button" class="btn btn-primary btn-xs tip" data-toggle="modal" data-target="#modalAmbientes"><i class="fa fa-building-o"></i></button>&nbsp;&nbsp;';
+        //   html += '<button onclick="mostrarAmbientes(' + item.id_persona + ',\''+item.nomb+'\')" type="button" class="btn btn-primary btn-xs tip" data-toggle="modal" data-target="#modalAmbientes"><i class="fa fa-building-o"></i></button>&nbsp;&nbsp;';
         // }
         html += '</div>';
         html += '</td>';
-        html += '<td>' + item.nombre + '</td>';
-        html += '<td>' + item.fecha_inicio + '</td>';
-        html += '<td>' + item.fecha_fin + '</td>';
+        html += '<td>' + item.nomb +'</td>';
+        html += '<td>' + item.usu + '</td>';
+        html += '<td>' + sexo + '</td>';
+        html += '<td>' + item.telefono + '</td>';
+        html += '<td>' + item.estado + '</td>';
         html += '</tr>';
       });
 
@@ -112,21 +120,133 @@ function agregar(){
   $('#divAgregar').show(1000);
   $('#divListado').hide(1000);
   $('#btnAgregar').hide(1000);
-  $('#txtNombrePeriodo').focus();
+  $('#txtNombreEstudiante').focus();
 }
 
 function cancelar(){
   $('#btnAgregar').show(1000);
   $('#divAgregar').hide(1000);
   $('#divListado').show(1000);
-  $('#txtNombrePeriodo').val('');
-  $('#rango').val('');
-  $('#txtFechaIni').val('');
-  $('#txtFechaFin').val('');
-  $('#txtIdPeriodo').val('');
+  $('#txtNombreEstudiante').val('');
+  $('#txtApellidoPaterno').val('');
+  $('#txtApellidoMaterno').val('');
+  $('#txtFechaNacimiento').val('');
+  $('#txtTelefono').val('');
+  $('#txtCodigoUsuario').val('');
+  $('#txtClave').val('');
+  $('#txtIdPersona').val('');
 }
 
-function eliminar(id_estudiante, nombre_estudiante) {
+function guardar(){
+  let nombre = $('#txtNombreEstudiante').val(),
+      paterno = $('#txtApellidoPaterno').val(),
+      materno = $('#txtApellidoMaterno').val(),
+      nacimiento = $('#txtFechaNacimiento').val(),
+      usuario = $('#txtCodigoUsuario').val(),
+      clave = $('#txtClave').val(),
+      persona = $('#txtIdPersona').val(),
+      telefono = $('#txtTelefono').val();
+  if(validaVacio(nombre) || validaVacio(paterno) || validaVacio(materno)){
+    swal({
+          title: 'Advertencia',
+          text: "Ingrese el nombre completo del estudiante",
+          type: 'warning',
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Entendido'
+    }).then((result) => {
+      if (result.value) {
+        $('#txtNombreEstudiante').focus();
+      }
+    })
+    return;
+  }
+
+  if(validaVacio(nacimiento)){
+    swal({
+          title: 'Advertencia',
+          text: "Ingrese la fecha de nacimiento del estudiante",
+          type: 'warning',
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Entendido'
+    }).then((result) => {
+      if (result.value) {
+        $('#txtFechaNacimiento').focus();
+      }
+    })
+    return;
+  }
+
+  if(validaVacio(usuario)){
+    swal({
+          title: 'Advertencia',
+          text: "Ingrese el código de usuario del estudiante",
+          type: 'warning',
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Entendido'
+    }).then((result) => {
+      if (result.value) {
+        $('#txtCodigoUsuario').focus();
+      }
+    })
+    return;
+  }
+
+  if(validaVacio(persona)){
+    if(validaVacio(clave)){
+      swal({
+            title: 'Advertencia',
+            text: "Ingrese la contraseña del estudiante",
+            type: 'warning',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Entendido'
+      }).then((result) => {
+        if (result.value) {
+          $('#txtClave').focus();
+        }
+      })
+      return;
+    }
+  }
+
+  $.post("../webservice/estudiante.agregar.editar.php",
+    {nombres: nombre,
+    paterno: paterno,
+    materno: materno,
+    sexo: $("input:radio[name=rbSexo]:checked").val(),
+    nacimiento: nacimiento.split('/')[2]+'-'+nacimiento.split('/')[1]+'-'+nacimiento.split('/')[0],
+    telefono: telefono,
+    clave: clave,
+    usuario: usuario,
+    persona: persona
+  }).done(function(resultado) {
+
+    let datosJSON = resultado;
+    if (datosJSON.estado === 200) {
+      swal({
+            title: '¡Genial!',
+            text: `${resultado.mensaje}`,
+            type: 'success',
+            confirmButtonText: 'Ok'
+          }).then((result) => {
+            if (result.value) {
+              $('#btnCancelar').click();
+              listarEstudiantes();
+            }
+          })
+    }
+  }).fail(function(error) {
+    var datosJSON = $.parseJSON(error.responseText);
+    swal("Error", datosJSON.mensaje, "error");
+  });
+}
+
+
+
+function eliminar(id_persona, nombre_estudiante) {
 
   swal({
         title: 'Advertencia',
@@ -150,7 +270,7 @@ function eliminar(id_estudiante, nombre_estudiante) {
       }).then((result) => {
         if (result.value == nombre_estudiante) {
           $.post("../webservice/estudiante.eliminar.php",
-            {estudiante: id_estudiante}).done(function(resultado) {
+            {persona: id_persona}).done(function(resultado) {
             let datosJSON = resultado;
             if (datosJSON.estado === 200) {
               listarEstudiantes();
@@ -188,83 +308,31 @@ function eliminar(id_estudiante, nombre_estudiante) {
   })
 }
 
-function leerDatos(id_estudiante){
+function leerDatos(id_persona){
   agregar();
   $.post("../webservice/estudiante.leer.datos.php", {
-    estudiante: id_estudiante
+    persona: id_persona
   }).done(function(resultado) {
     var datosJSON = resultado;
     if (resultado.estado === 200) {
-      $('#txtIdPeriodo').val(resultado.datos.id_estudiante);
-      $("#txtNombrePeriodo").val(resultado.datos.nombre);
-      $("#rango").val(resultado.datos.fecha_inicio + ' hasta '+resultado.datos.fecha_fin);
-      $("#txtFechaIni").val(resultado.datos.fecha_inicio);
-      $("#txtFechaFin").val(resultado.datos.fecha_fin);
-      $("#txtNombrePeriodo").focus();
+      let datos = resultado.datos
+
+      $('#txtNombreEstudiante').val(datos.nombres);
+      $('#txtApellidoPaterno').val(datos.paterno);
+      $('#txtApellidoMaterno').val(datos.materno);
+      $('#txtFechaNacimiento').val(datos.fecha_nacimiento.split('-')[2]+'/'+datos.fecha_nacimiento.split('-')[1]+'/'+datos.fecha_nacimiento.split('-')[0]);
+      $('#txtTelefono').val(datos.telefono);
+      $('#txtCodigoUsuario').val(datos.id_usuario);
+      $('#txtClave').val('****');
+      $('#txtIdPersona').val(datos.id_persona);
+      if(datos.sexo == 'F'){
+        $('#rbFemenino').iCheck('check')
+      }else{
+        $('#rbMasculino').iCheck('check');
+      }
+      $("#txtNombreEstudiante").focus();
     } else {
       swal("Hey!", resultado, "info");
-    }
-  }).fail(function(error) {
-    var datosJSON = $.parseJSON(error.responseText);
-    swal("Error", datosJSON.mensaje, "error");
-  });
-}
-
-function guardar(){
-  let nombre = $('#txtNombrePeriodo').val(), fechaIni = $('#txtFechaIni').val(), fechaFin = $('#txtFechaFin').val(), estudiante = $('#txtIdPeriodo').val();
-  if(validaVacio(nombre)){
-    swal({
-          title: 'Advertencia',
-          text: "El nombre del estudiante no puede estar vacío",
-          type: 'warning',
-          showCancelButton: false,
-          confirmButtonColor: '#3085d6',
-          confirmButtonText: 'Entendido'
-    }).then((result) => {
-      if (result.value) {
-        $('#txtNombrePeriodo').focus();
-      }
-    })
-    return;
-  }
-
-  if(validaVacio(fechaIni.toString()) || validaVacio(fechaFin.toString())){
-    swal({
-          title: 'Advertencia',
-          text: "Elija un estudiante de tiempo por favor.",
-          type: 'warning',
-          showCancelButton: false,
-          confirmButtonColor: '#3085d6',
-          confirmButtonText: 'Entendido'
-    }).then((result) => {
-      if (result.value) {
-        $('#rango').focus();
-      }
-    })
-    return;
-  }
-
-  console.warn(`${nombre} - ${fechaIni} - ${fechaFin} - idPeriodo: ${estudiante}`);
-
-  $.post("../webservice/estudiante.agregar.editar.php",
-    {estudiante: estudiante,
-    nombre: nombre,
-    fechaIni: fechaIni,
-    fechaFin: fechaFin}).done(function(resultado) {
-
-    let datosJSON = resultado;
-    if (datosJSON.estado === 200) {
-      swal({
-            title: '¡Genial!',
-            text: `${resultado.mensaje}`,
-            type: 'success',
-            confirmButtonText: 'Ok'
-          }).then((result) => {
-            if (result.value) {
-              $('#btnCancelar').click();
-              listarEstudiantes();
-            }
-          })
     }
   }).fail(function(error) {
     var datosJSON = $.parseJSON(error.responseText);

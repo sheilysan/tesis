@@ -38,6 +38,7 @@ class Estudiante extends Conexion{
       $sql = "INSERT INTO usuario (id_usuario,clave,id_persona)
               values(:p_id_usuario, :p_clave, :p_id_persona)";
       $sentencia = $this->dblink->prepare($sql);
+      $clave = md5($clave);
       $sentencia->bindParam(":p_id_persona", $id_persona);
       $sentencia->bindParam(":p_id_usuario", $usuario);
       $sentencia->bindParam(":p_clave", $clave);
@@ -65,12 +66,13 @@ class Estudiante extends Conexion{
       if($sentencia->rowCount() && $resultado['id_persona'] != $id_persona){
         throw new Exception("El código de usuario $usuario le pertenece a otra persona.");
       }else{
-        if($clave == "0"){
+        if($clave == "****"){
           $sql = "UPDATE usuario set id_usuario = :p_id_usuario where id_persona = :p_id_persona;";
           $sentencia = $this->dblink->prepare($sql);
         }else{
           $sql = "UPDATE usuario set id_usuario = :p_id_usuario, clave = :p_clave where id_persona = :p_id_persona;";
           $sentencia = $this->dblink->prepare($sql);
+          $clave = md5($clave);
           $sentencia->bindParam(":p_clave", $clave);
         }
         $sentencia->bindParam(":p_id_usuario", $usuario);
@@ -107,7 +109,7 @@ class Estudiante extends Conexion{
 
   public function leerDatos($id_persona){
     try {
-      $sql = "SELECT * from persona as p inner join usuario as u on(p.id_persona = u.id_persona) where id_persona = :p_id_persona;";
+      $sql = "SELECT * from persona as p inner join usuario as u on(p.id_persona = u.id_persona) where p.id_persona = :p_id_persona;";
       $sentencia = $this->dblink->prepare($sql);
       $sentencia->bindParam(":p_id_persona", $id_persona);
       $sentencia->execute();
@@ -120,7 +122,7 @@ class Estudiante extends Conexion{
 
   public function listar(){
     try {
-      $sql = "SELECT * from usuario as u inner join persona as p on(u.id_persona = p.id_persona) where p.id_tipo_persona = 2 order by p.paterno,p.materno,p.nombres;";
+      $sql = "SELECT p.id_persona, CONCAT(UPPER(p.paterno), ' ', UPPER(p.materno), ' ', UPPER(p.nombres)) as nomb, p.telefono, p.sexo, (UPPER(u.id_usuario)) as usu, u.estado  FROM persona as p inner join usuario as u on (p.id_persona = u.id_persona) where p.id_tipo_persona = 2 order by p.paterno,p.materno,p.nombres;";
       $sentencia = $this->dblink->prepare($sql);
       $sentencia->execute();
       $resultado = $sentencia->fetchAll(PDO::FETCH_ASSOC);
