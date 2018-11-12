@@ -69,7 +69,9 @@ function listarEstudiantes() {
         html += '<td>' + item.usu + '</td>';
         html += '<td>' + sexo + '</td>';
         html += '<td>' + item.telefono + '</td>';
-        html += '<td>' + item.estado + '</td>';
+        if(item.estado == 'A'){
+          html += '<td> <small class="label label-success"><i class="fa fa-check-circle-o"></i> ACTIVO</small></td>';  
+        }
         html += '</tr>';
       });
 
