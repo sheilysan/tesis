@@ -50,7 +50,7 @@
 
                 </div>
               </div>
-              <div id="divAgregar" >
+              <div id="divAgregar" hidden>
                 <form method="post">
                   <div class="form-group">
                     <label for="txtNombreEstudiante">Nombre</label>
@@ -68,23 +68,12 @@
                   </div>
 
                   <div class="form-group">
-                    <label>
-                      <input type="radio" name="r1" class="minimal" checked>
-                      Masculino
-                    </label>
-                    <label>
-                      <input type="radio" name="r1" class="minimal">
-                      Femenino
-                    </label>
-                  </div>
-
-                  <div class="form-group">
                     <label>Fecha nacimiento:</label>
                     <div class="input-group date">
                       <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <input type="text" class="form-control pull-right" id="datepicker">
+                      <input type="text" class="form-control pull-right" id="txtFechaNacimiento" name="txtFechaNacimiento" >
                     </div>
                     <!-- /.input group -->
                   </div>
@@ -96,14 +85,31 @@
                       <div class="input-group-addon">
                         <i class="fa fa-phone"></i>
                       </div>
-                      <input type="text" class="form-control" data-inputmask='"mask": "999-999-999"' data-mask>
+                      <input type="text" name="txtIdPersona" id="txtIdPersona" hidden>
+                      <input id="txtTelefono" name="txtTelefono" type="text" class="form-control" data-inputmask='"mask": "999-999-999"' data-mask>
                     </div>
                     <!-- /.input group -->
                   </div>
 
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Contraseña</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña">
+                    <label>
+                      <input type="radio" name="rbSexo" id="rbMasculino" class="minimal" value="M" checked>
+                      Masculino
+                    </label>
+                    <label>
+                      <input type="radio" name="rbSexo" id="rbFemenino" class="minimal" value="F">
+                      Femenino
+                    </label>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="txtCodigoUsuario">Código estudiante</label>
+                    <input type="text" class="form-control" name="txtCodigoUsuario" id="txtCodigoUsuario" placeholder="">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="txtClave">Contraseña</label>
+                    <input maxlength="4" type="password" class="form-control" id="txtClave" name="txtClave" data-inputmask='"mask": "9999"' data-mask>
                   </div>
 
                   <div class="form-group pull-right">

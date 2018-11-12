@@ -31,8 +31,9 @@ try {
   $objEstudiante = new Estudiante();
 
   if(is_numeric($id_persona)){
-    if($clave != 0){
-      $clave = md5($clave);
+    $validarContra = strpos($clave, "****");
+    if(strlen($clave) < 4 || $validarContra !== false){
+      $clave = '****';
     }
     $resultado = $objEstudiante->editar($id_persona,$paterno,$materno,$nombres,$sexo,$nacimiento,$telefono,$usuario,$clave);
     $msg = "de la";
