@@ -130,3 +130,64 @@ CONSTRAINT fk_pregunta_pregunta foreign key (id_pregunta) references pregunta(id
 alter table usuario modify column estado char(1) not null default 'A';
 alter table usuario modify column clave char(32) not null;
 alter table tipo_persona modify column nombre varchar(20) not null;
+
+drop table periodo_usuario; --volver a agregar
+drop table subtemahueso;
+drop table preguntatest;
+drop table opcionpregunta;
+drop table pregunta;
+drop table opcion;
+drop table test;
+drop table subtema;
+drop table tema;
+drop table hueso;
+
+create TABLE periodo_usuario (
+id_periodo int not null,
+id_usuario char(10) not null,
+fecha_inscripcion timestamp default CURRENT_TIMESTAMP,
+CONSTRAINT pk_periodo_usuario PRIMARY key (id_periodo, id_usuario),
+CONSTRAINT fk_periodo_usuario_periodo foreign key (id_periodo) references periodo(id_periodo),
+CONSTRAINT fk_periodo_usuario_usuario foreign key (id_usuario) references usuario(id_usuario)
+);
+
+create TABLE test (
+id_test int AUTO_INCREMENT not null,
+nota real not null,
+fecha_test timestamp default CURRENT_TIMESTAMP,
+id_tipo_test int not null,
+id_usuario char(10) not null,
+id_periodo int not null,
+CONSTRAINT pk_test PRIMARY key (id_test),
+CONSTRAINT fk_test_tipo_test foreign key (id_tipo_test) references tipo_test(id_tipo_test),
+CONSTRAINT fk_test_periodo_usuario foreign key (id_usuario, id_periodo) references periodo_usuario(id_usuario,id_periodo)
+);
+
+create TABLE hueso (
+id_hueso int AUTO_INCREMENT not null,
+modelo text not null,
+nombre_hueso text not null,
+url_modelo text null,
+CONSTRAINT pk_id_hueso PRIMARY key (id_hueso)
+);
+
+create table detalle_test(
+    id_test int not null,
+    id_hueso int not null,
+    respuesta text not null,
+    puntaje real not null,
+    CONSTRAINT pk_detalle_test PRIMARY key (id_test,id_hueso),
+    CONSTRAINT fk_detalle_test_test foreign key (id_test) references test (id_test),
+    CONSTRAINT fk_detalle_test_hueso foreign key (id_hueso) references hueso (id_hueso)
+);
+
+INSERT INTO hueso (modelo, nombre_hueso) VALUES ('Frontal_bone', 'Frontal');
+INSERT INTO hueso (modelo, nombre_hueso) VALUES ('Sphenoid_bone', 'Esfenoides');
+INSERT INTO hueso (modelo, nombre_hueso) VALUES ('Lacrimal_bone_R', 'Lacrimal');
+INSERT INTO hueso (modelo, nombre_hueso) VALUES ('Mandible', 'Mandíbula');
+INSERT INTO hueso (modelo, nombre_hueso) VALUES ('Maxilla_bone_R', 'Maxilar');
+INSERT INTO hueso (modelo, nombre_hueso) VALUES ('Nasal_R', 'Hueso Nasal');
+INSERT INTO hueso (modelo, nombre_hueso) VALUES ('Occipital_bone', 'Occipital');
+INSERT INTO hueso (modelo, nombre_hueso) VALUES ('Parietal_bone_R', 'Parietal');
+INSERT INTO hueso (modelo, nombre_hueso) VALUES ('Temporal_bone_R', 'Temporal');
+INSERT INTO hueso (modelo, nombre_hueso) VALUES ('Zygomatic_bone_R', 'Hueso cigomático');

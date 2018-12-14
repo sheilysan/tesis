@@ -48,6 +48,20 @@
                 <div id="divListado">
 
                 </div>
+                <div id="div" hidden>
+                  <div class="box-tools pull-right">
+                    <button type="button" id="btnAgregarUsuario" class="btn btn-block btn-success btn-xs"><i class="fa fa-plus-o"></i> Agregar estudiante al periodo</button>
+                  </div>
+                  <div id="divListadoAlumnosPeriodo">
+                  
+                  </div>
+                  <div id="agregarAlumno">
+                    
+                  </div>
+                  <div class="box-tools pull-right">
+                    <button type="button" id="btnVolver" onclick="listarPeriodos()" class="btn btn-block btn-danger btn-xs"><i class="fa fa-arrow-up"></i> Volver</button>
+                  </div>
+                </div>
               </div>
               <div id="divAgregar" hidden>
                 <form method="post">

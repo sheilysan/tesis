@@ -12,13 +12,13 @@ try {
   }
 
     $id_usuario = $_GET["txtIdUsuario"];
-    $clave = $_GET["txtclave"]; //aqu se convierte la contraseña enviada en md5
+    $clave = $_GET["txtclave"]; 
 
     $objSesion = new Sesion();
 
     $resultado = $objSesion->iniciarSesionApp($id_usuario,$clave);
-    echo "200";
-    //Funciones::imprimeJSON(200,"Bienvenido",$resultado);
+    // echo "200";
+    Funciones::imprimeJSON(200,"Bienvenido",$resultado);
 
 } catch (Exception $ex) {
     Funciones::imprimeJSON(500, $ex->getMessage(), "");

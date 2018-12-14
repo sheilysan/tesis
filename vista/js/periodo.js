@@ -10,14 +10,12 @@ $(document).ready(function() {
   });
   $('#rango').val('');
   listarPeriodos();
-
-
-  // blockUI('#listado');
-  // $("#liMantenimientos").click();
-  // $("#submenuLugar").addClass("active");
 });
 
 function listarPeriodos() {
+  $('#div').hide(1000);
+  $('#divListado').show(1000);
+  $('#divAgregar').hide(1000);
   $.post(
     "../webservice/periodo.listar.php"
   ).done(function(resultado) {
@@ -47,6 +45,7 @@ function listarPeriodos() {
         }
         html += '<td align="center">';
         html += '<div class="row-fluid">';
+        html += '<button onclick="listarPersonasPeriodo(' + item.id_periodo + ',\''+item.nombre+'\')" type="button" class="btn btn-primary btn-xs tip"><i class="fa fa-plus-circle"></i></button>&nbsp;&nbsp;';
         html += '<button onclick="leerDatos(' + item.id_periodo + ')" type="button" class="btn btn-warning btn-xs"><i class="fa fa-pencil-square-o"></i></button>&nbsp;&nbsp;';
         html += '<button onclick="eliminar(' + item.id_periodo + ',\''+item.nombre+'\')" type="button" class="btn btn-danger btn-xs tip"><i class="fa fa-trash-o"></i></button>&nbsp;&nbsp;';
         // if(item.conteo > 0){
@@ -109,6 +108,7 @@ function agregar(){
   $('#divAgregar').show(1000);
   $('#divListado').hide(1000);
   $('#btnAgregar').hide(1000);
+  $('#div').hide(1000);
   $('#txtNombrePeriodo').focus();
 }
 
@@ -116,6 +116,7 @@ function cancelar(){
   $('#btnAgregar').show(1000);
   $('#divAgregar').hide(1000);
   $('#divListado').show(1000);
+  $('#div').hide(1000);
   $('#txtNombrePeriodo').val('');
   $('#rango').val('');
   $('#txtFechaIni').val('');
@@ -276,4 +277,102 @@ function validaVacio(valor) {
   else {
     return false
   }
+}
+
+
+
+function listarPersonasPeriodo(id_periodo,nombre_periodo){
+  $('#div').show(1000);
+  $('#divListado').hide(1000);
+  $('#divAgregar').hide(1000);
+  $.post(
+    "../webservice/periodo.listar.estudiante.php",
+    {
+      id_periodo: id_periodo
+    }
+  ).done(function(resultado) {
+    var datosJSON = resultado;
+
+    if (datosJSON.estado === 200) {
+      var html = "";
+      html += `<label > ${nombre_periodo}</label>`
+      html += '<small>';
+      html += '<table class="table table-bordered" id="tabla-listado-periodo" cellspacing="0" width="100%">';
+      html += '<thead>';
+      html += '<tr style="background-color: #ededed; height:20px;">';
+      html += '<th style="min-width: 80px;" align="center" >ELIMINAR</th>';
+      html += '<th style="min-width: 100px;">CÓDIGO DE USUARIO</th>';
+      html += '<th style="min-width: 150px;" align="center" >NOMBRE COMPLETO</th>';
+      html += '<th style="min-width: 150px;" align="center" >FECHA INSCRIPCIÓN</th>';
+      html += '</tr>';
+      html += '</thead>';
+      html += '<tbody>';
+
+      //Detalle
+      $.each(datosJSON.datos, function(i, item) {
+
+        if (i % 2 == 0) {
+          html += '<tr style="background-color: RGBA(123, 62, 48, 0.2); color: black;">';
+        } else {
+          html += '<tr>';
+        }
+        html += '<td align="center">';
+        html += '<div class="row-fluid">';
+        html += '<button onclick="eliminarUsuarioPeriodo('+item.id_periodo+',\''+item.id_usuario+'\')" type="button" class="btn btn-danger btn-xs tip"><i class="fa fa-trash-o"></i></button>&nbsp;&nbsp;';
+      
+        html += '</div>';
+        html += '</td>';
+        html += `<td>${item.id_usuario}</td>`
+        html += `<td>${item.nombre_completo}</td>`
+        html += `<td>${item.fecha}</td>`
+        html += '</tr>';
+      });
+
+      html += '</tbody>';
+      html += '</table>';
+      html += '</small>';
+
+      $("#divListadoAlumnosPeriodo").html(html);
+      $('#tabla-listado-periodo').dataTable({
+        "scrollX": "100%",
+        "bPaginate": true,
+        "bScrollCollapse": true,
+        "sScrollXInner": "100%",
+        "language": {
+          "emptyTable": "No hay datos disponibles para mostrar.",
+          "info": "Mostrando _START_ a _END_ de _TOTAL_ estudiantes",
+          "infoEmpty": "0 datos",
+          "infoFiltered": "(filtrados de _MAX_ estudiantes)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Mostrar _MENU_  estudiantes",
+          "loadingRecords": "Cargando...",
+          "processing": "Procesando...",
+          "search": "Buscar:",
+          "zeroRecords": "No se han encontrado coincidencias",
+          "paginate": {
+            "first": "Primera",
+            "last": "Última",
+            "next": "Siguiente",
+            "previous": "Anterior"
+          },
+          "aria": {
+            "sortAscending": ": activar para ordenar de forma ascendiente",
+            "sortDescending": ": activar para ordenar de forma descendiente"
+          }
+        }
+      });
+
+      $("#btnAgregarUsuario").click(agregarUsuarioAlPeriodo(id_periodo));
+    } else {
+      swal("Mensaje del sistema", resultado, "warning");
+    }
+  }).fail(function(error) {
+    var datosJSON = $.parseJSON(error.responseText);
+    swal("Error", datosJSON.mensaje, "error");
+  });
+}
+
+function agregarUsuarioAlPeriodo(id_periodo){
+  
 }

@@ -71,11 +71,13 @@ class Sesion extends Conexion{
                                                p.nombres,
                                                p.sexo,
                                                tp.id_tipo,
-                                               tp.nombre as tipo
+                                               tp.nombre as tipo, 
+                                               pu.id_periodo 
                                         FROM
                                         	usuario u inner join
                                           persona p on (u.id_persona=p.id_persona) inner join
-                                          tipo_persona tp on (p.id_tipo_persona = tp.id_tipo)
+                                          tipo_persona tp on (p.id_tipo_persona = tp.id_tipo) inner join 
+                                          periodo_usuario pu on (u.id_usuario = pu.id_usuario) 
                                         WHERE u.id_usuario=:id_usuario LIMIT 1");
 				$stmt->bindParam(":id_usuario", $id_usuario);
 				$stmt->execute();

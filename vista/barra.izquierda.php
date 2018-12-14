@@ -23,6 +23,7 @@
         <ul class="treeview-menu">
           <li class="active"><a href="periodo.php"><i class="fa fa-circle-o"></i> Periodos</a></li>
           <li><a href="estudiante.php"><i class="fa fa-circle-o"></i> Estudiantes</a></li>
+          <li><a href="reporte.estudiante.php"><i class="fa fa-circle-o"></i> Reporte Estudiantes</a></li>
         </ul>
       </li>
     </ul>

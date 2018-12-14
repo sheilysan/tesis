@@ -84,4 +84,17 @@ class Periodo extends Conexion{
       throw $e;
     }
   }
+
+  public function listarInscritosPeriodo($id_periodo){
+    try {
+      $sql = "SELECT pu.id_periodo, pu.id_usuario, concat(UPPER(p.paterno),' ',UPPER(p.materno),' ',UPPER(p.nombres)) as nombre_completo, UPPER((DATE_FORMAT(pu.fecha_inscripcion, '%d de %M del %Y'))) as fecha from periodo_usuario as pu inner join usuario as u on (pu.id_usuario = u.id_usuario) inner join persona as p on (u.id_persona = p.id_persona) where pu.id_periodo = :p_id_periodo;";
+      $sentencia = $this->dblink->prepare($sql);
+      $sentencia->bindParam(":p_id_periodo", $id_periodo);
+      $sentencia->execute();
+      $resultado = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+      return $resultado;
+    } catch (Exception $e) {
+      throw $e;
+    }
+  }
 }
