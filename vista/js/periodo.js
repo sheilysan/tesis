@@ -374,5 +374,48 @@ function listarPersonasPeriodo(id_periodo,nombre_periodo){
 }
 
 function agregarUsuarioAlPeriodo(id_periodo){
-  
+  $('#agregarAlumno').show(1000);
+  $("#txtIdPeriodoAlumno").val(id_periodo);
+}
+
+function AgregarAlumno(){
+  let codigoAlumno = $('#txtAlumnoAgregar').val(), periodo = $('#txtIdPeriodoAlumno').val();
+  if(validaVacio(codigoAlumno)){
+    swal({
+          title: 'Advertencia',
+          text: "El código del alumno no puede estar vacío",
+          type: 'warning',
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Entendido'
+    }).then((result) => {
+      if (result.value) {
+        $('#txtAlumnoAgregar').focus();
+      }
+    })
+    return;
+  }
+
+  $.post("../webservice/alumno.agregar.periodo.php",
+    {id_periodo: periodo,
+    codigo_usuario: codigoAlumno}).done(function(resultado) {
+
+    let datosJSON = resultado;
+    if (datosJSON.estado === 200) {
+      swal({
+            title: '¡Genial!',
+            text: `${resultado.mensaje}`,
+            type: 'success',
+            confirmButtonText: 'Ok'
+          }).then((result) => {
+            if (result.value) {
+              $('#btnCancelar').click();
+              listarPeriodos();
+            }
+          })
+    }
+  }).fail(function(error) {
+    var datosJSON = $.parseJSON(error.responseText);
+    swal("Error", datosJSON.mensaje, "error");
+  });
 }

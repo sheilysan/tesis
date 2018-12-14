@@ -55,8 +55,21 @@
                   <div id="divListadoAlumnosPeriodo">
                   
                   </div>
-                  <div id="agregarAlumno">
-                    
+                  <div id="agregarAlumno" hidden>
+                    <form method="post">
+                      <div class="form-group">
+                        <input type="text" class="form-control" name="txtIdPeriodoAlumno" id="txtIdPeriodoAlumno" placeholder="" hidden>
+                      </div>
+                      <div class="form-group">
+                        <label for="txtAlumnoAgregar">Ingrese el código del alumno</label>
+                        <input type="text" class="form-control" name="txtAlumnoAgregar" id="txtAlumnoAgregar" placeholder="">
+                      </div>
+
+                      <div class="form-group pull-right">
+                        <button type="button" onclick="AgregarAlumno()" name="btnGuardarAlumno" id="btnGuardarbtnGuardarAlumno" class="btn btn-sm btn-success"> Agregar Alumno </button>
+                        <button type="button" onclick="cancelarAgregar()" name="btnCancelarAlumno" id="btnCancelarbtnCancelarAlumno" class="btn btn-sm btn-danger"> Cancelar </button>
+                      </div>
+                    </form>
                   </div>
                   <div class="box-tools pull-right">
                     <button type="button" id="btnVolver" onclick="listarPeriodos()" class="btn btn-block btn-danger btn-xs"><i class="fa fa-arrow-up"></i> Volver</button>

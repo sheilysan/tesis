@@ -24,6 +24,7 @@ class Periodo extends Conexion{
     }
     return false;
   }
+  
 
   public function editar($id_periodo,$nombre,$inicio,$fin){
     $this->dblink->beginTransaction();
@@ -96,5 +97,25 @@ class Periodo extends Conexion{
     } catch (Exception $e) {
       throw $e;
     }
+  }
+  
+  public function agregarAlumnoPeriodo($id_periodo,$codigo_usuario){
+    $this->dblink->beginTransaction();
+
+    try {
+        $sql = "INSERT INTO periodo_usuario (id_periodo, id_usuario, fecha_inscripcion) VALUES (:p_id_periodo, :p_codigo_usuario, CURRENT_TIMESTAMP);";
+
+        $sentencia = $this->dblink->prepare($sql);
+        $sentencia->bindParam(":p_id_periodo", $id_periodo);
+        $sentencia->bindParam(":p_codigo_usuario", $codigo_usuario);
+        $sentencia->execute();
+
+        $this->dblink->commit();
+        return true;
+    } catch (Exception $exc) {
+        $this->dblink->rollBack();
+        throw $exc;
+    }
+    return false;
   }
 }
